@@ -2,41 +2,51 @@
  * Created by Administrator on 2017-07-03.
  */
 
-// º¯¼ö¼±¾ğ = require('¸ğµâÀÌ¸§');
+// ë³€ìˆ˜ì„ ì–¸ = require('ëª¨ë“ˆì´ë¦„');
 var gulp = require('gulp');
 var livereload = require('gulp-livereload');
 var include = require('gulp-include');
 var sass = require('gulp-sass');
 var watch = require('gulp-watch');
 var sourcemaps = require('gulp-sourcemaps');
+var concat = require('gulp-concat');
 
 /*
 
-gulp.task( taskÀÌ¸§, ÇÔ¼ö/ÀÍ¸íÇÔ¼ö );
+ gulp.task( taskì´ë¦„, í•¨ìˆ˜/ìµëª…í•¨ìˆ˜ );
 
  */
 
-gulp.task('hello1', function(){
-  return console.log('Hello World')
+gulp.task('hello1', function () {
+  return console.log('Hello World1!');
 });
 
-gulp.task('hello2', function(){
-  return console.log('Hello World')
+gulp.task('hello2', function () {
+  return console.log('Hello World2!');
 });
 
-gulp.task('hello3', function(){
-  return console.log('Hello World')
+gulp.task('hello3', function () {
+  return console.log('Hello World3!');
 });
 
-// pipe()´Â ¸ğµâÀÇ ±â´ÉÀ» ½ÇÇàÇØÁÖ´Â ÇÔ¼ö !!!
+// pipe()ëŠ” ëª¨ë“ˆì˜ ê¸°ëŠ¥ì„ ì‹¤í–‰í•´ì£¼ëŠ” í•¨ìˆ˜
 
-// »õ·Î °íÄ§
+// ìƒˆë¡œ ê³ ì¹¨
 gulp.task('livereload', function(){
   gulp.src(['html/*', 'css/*', 'js/*', '*'])
       .pipe( livereload() );
 });
 
-// header, footer, °øÅë¿µ¿ª ºĞ¸®
+gulp.task('watch', function() {
+  livereload.listen();
+  gulp.watch('*', ['livereload']);
+  gulp.watch('html_src/**', ['include', 'livereload']);
+  gulp.watch('css_src/**', ['sass', 'livereload']);
+  gulp.watch('js_src/**', ['tabmenu', 'livereload']);
+
+});
+
+// header, footer, ê³µí†µì˜ì—­ ë¶„ë¦¬
 gulp.task('include', function(){
   gulp.src("html_src/*.html")
       .pipe(include())
@@ -44,7 +54,7 @@ gulp.task('include', function(){
       .pipe(gulp.dest("html/"));
 });
 
-// sass ½ÇÇà
+// sass ì‹¤í–‰
 gulp.task('sass', function(){
   return gulp.src('css_src/*.scss')
       .pipe(sourcemaps.init())
@@ -53,13 +63,14 @@ gulp.task('sass', function(){
       .pipe(gulp.dest('css/'));
 });
 
-//watch
-gulp.task('watch', function(){
-  livereload.listen();
-  gulp.watch('*', ['livereload']);
-  gulp.watch('html_src//**',['include', 'livereload']);
-  gulp.watch('css_src/**',['sass','livereload']);
+// concat ì‹¤í–‰ - ì—¬ëŸ¬ ê°œì˜ íŒŒì¼ì„ í•˜ë‚˜ì˜ íŒŒì¼ë¡œ í•©ì¹˜ëŠ” ê¸°ëŠ¥
+
+gulp.task('tabmenu', function() {
+  return gulp.src('js_src/tab_menu/*.js')
+      .pipe(sourcemaps.init())
+      .pipe(concat('tab_menu.js'))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('js/'));
 });
 
-gulp.task('default', ['livereload', 'include', 'sass', 'watch']);
-
+gulp.task('default', ['livereload', 'include', 'sass', 'tabmenu', 'watch']);
