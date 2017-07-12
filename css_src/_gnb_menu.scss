@@ -1,0 +1,70 @@
+/* Gnb Menu Style */
+
+// 기본 style
+.menu{
+  &-wrap{
+    /*
+    border-top:50px solid #333;
+    border-bottom:50px solid #bbb;
+    */
+    border:{
+      top:50px solid #333;
+      bottom:50px solid #bbb;
+    }
+    // 글꼴이름이 한글 or 공백이 있을 때 => 따옴표
+    font-family: "Noto Sans CJK KR", sans-serif;
+
+    @extend %clearfix;
+  }
+  &-inner{
+    width:1080px;
+    margin:0 auto;
+  }
+  &-logo{
+    float:left;
+    margin:21px 100px 0 0;
+  }
+
+  &-nav{
+    float:left;
+  }
+
+  &-depth1{
+
+    @extend %clearfix;
+
+    &-item{
+      float:left;
+    }
+
+    &-link{
+      display:block;
+      color:#666;
+      font-size:17px;
+      padding:33px 27px 0;
+      height:47px;
+
+      &:hover{
+        color:#f27321;
+      }
+
+    }
+
+    &-border{
+      content:"";
+      display:block;
+      width:0;
+      height:4px;
+      background:deepskyblue;
+      margin:10px auto 0;
+    }
+  }
+
+  &-depth2{
+    display:none;
+  }
+
+  &-depth3{
+    display:none;
+  }
+}
